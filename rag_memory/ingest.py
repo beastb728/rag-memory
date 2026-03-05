@@ -19,8 +19,11 @@ def ingest_directory(directory):
         if not text:
             continue
 
-        for chunk in chunk_text(text):
+        for i, chunk in enumerate(chunk_text(text)):
+            chunk_id = f"{file}_chunk_{i}"
+
             chunks.append({
+                "id": chunk_id,
                 "text": chunk,
                 "source": str(file)
             })

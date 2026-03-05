@@ -11,7 +11,7 @@ def add_chunks(chunks, embeddings):
     documents = [c["text"] for c in chunks]
     sources = [c["source"] for c in chunks]
 
-    ids = [str(i) for i in range(len(chunks))]
+    ids = [c["id"] for c in chunks]
 
     collection.add(
         documents=documents,
