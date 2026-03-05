@@ -9,21 +9,28 @@ collection = client.get_or_create_collection(name="rag-memory")
 
 def add_chunks(chunks, embeddings):
     documents = [c["text"] for c in chunks]
-    sources = [c["source"] for c in chunks]
     ids = [c["id"] for c in chunks]
 
     collection.add(
         documents=documents,
         embeddings=embeddings,
         ids=ids,
-        metadatas=[{"source": s} for s in sources]
+        metadatas=[
+            {
+                "source": c["source"],
+                "created": c["created"],
+                "modified": c["modified"]
+            }
+            for c in chunks
+        ]
     )
 
 
 def search(query_embedding, k=5):
     results = collection.query(
         query_embeddings=[query_embedding],
-        n_results=k
+        n_results=k,
+        include=["documents", "metadatas", "distances"]
     )
 
     return results

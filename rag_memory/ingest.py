@@ -1,4 +1,6 @@
+import os
 from pathlib import Path
+from datetime import datetime
 from .parser import parse_file
 
 
@@ -19,13 +21,20 @@ def ingest_directory(directory):
         if not text:
             continue
 
+        stat = os.stat(file)
+
+        created = datetime.fromtimestamp(stat.st_ctime).isoformat()
+        modified = datetime.fromtimestamp(stat.st_mtime).isoformat()
+
         for i, chunk in enumerate(chunk_text(text)):
             chunk_id = f"{file}_chunk_{i}"
 
             chunks.append({
                 "id": chunk_id,
                 "text": chunk,
-                "source": str(file)
+                "source": str(file),
+                "created": created,
+                "modified": modified
             })
 
     return chunks

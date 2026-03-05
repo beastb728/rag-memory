@@ -9,7 +9,20 @@ def semantic_search(query):
 
     docs = results["documents"][0]
     metas = results["metadatas"][0]
+    distances = results["distances"][0]
 
-    for doc, meta in zip(docs, metas):
-        print("\nSource:", meta["source"])
+    if not docs:
+        print("No results found.")
+        return
+
+    for doc, meta, dist in zip(docs, metas, distances):
+        score = 1 - dist
+
+        print("\n-----------------------------")
+        print("Source:", meta.get("source", "Unknown"))
+        print("Created:", meta.get("created", "Unknown"))
+        print("Modified:", meta.get("modified", "Unknown"))
+        print("Score:", round(score, 3))
+
+        print("\nSnippet:")
         print(doc[:300])
