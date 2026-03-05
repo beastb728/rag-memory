@@ -10,7 +10,6 @@ collection = client.get_or_create_collection(name="rag-memory")
 def add_chunks(chunks, embeddings):
     documents = [c["text"] for c in chunks]
     sources = [c["source"] for c in chunks]
-
     ids = [c["id"] for c in chunks]
 
     collection.add(
