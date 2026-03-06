@@ -16,13 +16,13 @@ def semantic_search(query):
         return
 
     for doc, meta, dist in zip(docs, metas, distances):
-        score = 1 - dist
 
         print("\n-----------------------------")
         print("Source:", meta.get("source", "Unknown"))
         print("Created:", meta.get("created", "Unknown"))
         print("Modified:", meta.get("modified", "Unknown"))
-        print("Score:", round(score, 3))
+
+        print("Distance:", round(dist, 3))
 
         print("\nSnippet:")
         print(doc[:300])
